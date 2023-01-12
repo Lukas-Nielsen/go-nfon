@@ -35,33 +35,33 @@ func (p *PhoneExtension) DeleteEntry(id string) bool {
 	}
 }
 
-func (p *PhoneExtension) Get(offset int, pagesize int) apiResponse {
+func (p *PhoneExtension) Get(offset int, pagesize int) ApiResponse {
 	query := "?_offset=" + fmt.Sprint(offset) + "&_pagesize=" + fmt.Sprint(pagesize)
-	var data apiResponse
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions"+query, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
-func (p *PhoneExtension) GetEntry(id string) apiResponse {
-	var data apiResponse
+func (p *PhoneExtension) GetEntry(id string) ApiResponse {
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
-func (p *PhoneExtension) Post(input *Option) apiResponse {
-	var data apiResponse
+func (p *PhoneExtension) Post(input *Option) ApiResponse {
+	var data ApiResponse
 
 	req := p.NewRequest()
 
@@ -82,12 +82,12 @@ func (p *PhoneExtension) Post(input *Option) apiResponse {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
 func (p *PhoneExtension) PutEntry(id string, input *Option) bool {
-	var data apiResponse
+	var data ApiResponse
 
 	req := p.NewRequest()
 

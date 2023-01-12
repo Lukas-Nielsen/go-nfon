@@ -32,33 +32,33 @@ func (p *Phonebook) DeleteEntry(id string) bool {
 	}
 }
 
-func (p *Phonebook) Get(offset int, pagesize int) apiResponse {
+func (p *Phonebook) Get(offset int, pagesize int) ApiResponse {
 	query := "?_offset=" + fmt.Sprint(offset) + "&_pagesize=" + fmt.Sprint(pagesize)
-	var data apiResponse
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		send(GET, "/api/customers/"+p.sysid+"/phone-books"+query, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
-func (p *Phonebook) GetEntry(id string) apiResponse {
-	var data apiResponse
+func (p *Phonebook) GetEntry(id string) ApiResponse {
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		send(GET, "/api/customers/"+p.sysid+"/phone-books/"+id, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
-func (p *Phonebook) Post(name string, number string) apiResponse {
-	var data apiResponse
+func (p *Phonebook) Post(name string, number string) ApiResponse {
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		AddData("displayName", name).
@@ -67,12 +67,12 @@ func (p *Phonebook) Post(name string, number string) apiResponse {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
 func (p *Phonebook) PutEntry(id string, name string, number string) bool {
-	var data apiResponse
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		AddData("displayName", name).
@@ -85,32 +85,32 @@ func (p *Phonebook) PutEntry(id string, name string, number string) bool {
 	}
 }
 
-func (p *Phonebook) GetEntryVisibilities(id string) apiResponse {
-	var data apiResponse
+func (p *Phonebook) GetEntryVisibilities(id string) ApiResponse {
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		send(GET, "/api/customers/"+p.sysid+"/phone-books/"+id+"/visibilities", &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
-func (p *Phonebook) GetEntryVisibilitiesExtension(id string, extension string) apiResponse {
-	var data apiResponse
+func (p *Phonebook) GetEntryVisibilitiesExtension(id string, extension string) ApiResponse {
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		send(GET, "/api/customers/"+p.sysid+"/phone-books/"+id+"/visibilities/"+extension, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
-func (p *Phonebook) PostEntryVisibilities(id string, extension string) apiResponse {
-	var data apiResponse
+func (p *Phonebook) PostEntryVisibilities(id string, extension string) ApiResponse {
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		AddLink("phoneExtension", "/api/customers/"+p.sysid+"/targets/phone-extensions/"+extension).
@@ -118,30 +118,30 @@ func (p *Phonebook) PostEntryVisibilities(id string, extension string) apiRespon
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
-func (p *Phonebook) DeleteEntryVisibilitiesExtension(id string, extension string) apiResponse {
-	var data apiResponse
+func (p *Phonebook) DeleteEntryVisibilitiesExtension(id string, extension string) ApiResponse {
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		send(DELETE, "/api/customers/"+p.sysid+"/phone-books/"+id+"/visibilities/"+extension, &data); status == DELETE_SUCCESS {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }
 
-func (p *Phonebook) GetEntryVisibilitiesAvailableExtensions(id string, extension string) apiResponse {
-	var data apiResponse
+func (p *Phonebook) GetEntryVisibilitiesAvailableExtensions(id string, extension string) ApiResponse {
+	var data ApiResponse
 
 	if status, err := p.NewRequest().
 		send(GET, "/api/customers/"+p.sysid+"/phone-books/"+id+"/visibilities/available-phone-extensions", &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
-		return apiResponse{}
+		return ApiResponse{}
 	}
 }

@@ -16,7 +16,7 @@ import (
 )
 
 type method string
-type methodSuccess int
+type MethodSuccess int
 
 const (
 	POST   method = "POST"
@@ -24,30 +24,30 @@ const (
 	DELETE method = "DELETE"
 	GET    method = "GET"
 
-	POST_SUCCESS   methodSuccess = 201
-	PUT_SUCCESS    methodSuccess = 204
-	DELETE_SUCCESS methodSuccess = 204
-	GET_SUCCESS    methodSuccess = 200
+	POST_SUCCESS   MethodSuccess = 201
+	PUT_SUCCESS    MethodSuccess = 204
+	DELETE_SUCCESS MethodSuccess = 204
+	GET_SUCCESS    MethodSuccess = 200
 )
 
-type apiResponse struct {
+type ApiResponse struct {
 	Href   string  `json:"href"`
 	Offset int     `json:"offset"`
 	Total  int     `json:"total"`
 	Size   int     `json:"size"`
-	Links  []links `json:"links"`
-	Data   []data  `json:"data"`
+	Links  []Links `json:"links"`
+	Data   []Data  `json:"data"`
 	Items  []struct {
 		Href  string  `json:"href"`
-		Data  []data  `json:"data"`
-		Links []links `json:"links"`
+		Data  []Data  `json:"data"`
+		Links []Links `json:"links"`
 	} `json:"items"`
 }
 
 type ApiRequest struct {
 	*Config
-	Links []links `json:"links,omitempty"`
-	Data  []data  `json:"data,omitempty"`
+	Links []Links `json:"links,omitempty"`
+	Data  []Data  `json:"data,omitempty"`
 }
 
 type apiError struct {
@@ -74,17 +74,33 @@ func (e apiError) log() {
 	}
 }
 
-type data struct {
+type Data struct {
 	Name  string `json:"name"`
 	Value any    `json:"value"`
 }
 
-type links struct {
+func DataToMap(data []Data) map[dataName]any {
+	result := make(map[dataName]any)
+	for _, entry := range data {
+		result[dataName(entry.Name)] = entry.Value
+	}
+	return result
+}
+
+type Links struct {
 	Rel  string `json:"rel"`
 	Href string `json:"href"`
 }
 
-func (a *ApiRequest) send(method method, path string, result *apiResponse) (methodSuccess, apiError) {
+func LinksToMap(data []Links) map[linkRel]string {
+	result := make(map[linkRel]string)
+	for _, entry := range data {
+		result[linkRel(entry.Rel)] = entry.Href
+	}
+	return result
+}
+
+func (a *ApiRequest) send(method method, path string, result *ApiResponse) (MethodSuccess, apiError) {
 	var dataByte []byte
 	if len(a.Data) == 0 && len(a.Links) == 0 {
 		dataByte = []byte{}
@@ -107,7 +123,7 @@ func (a *ApiRequest) send(method method, path string, result *apiResponse) (meth
 
 	contentLength := fmt.Sprint(len(string(dataByte)))
 
-	statusCode := methodSuccess(0)
+	statusCode := MethodSuccess(0)
 	var responseError apiError
 
 	client := resty.New().
@@ -130,7 +146,7 @@ func (a *ApiRequest) send(method method, path string, result *apiResponse) (meth
 			SetError(&responseError).
 			Delete(path)
 		if err == nil {
-			statusCode = methodSuccess(resp.StatusCode())
+			statusCode = MethodSuccess(resp.StatusCode())
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
 			return a.send(method, path, result)
 		} else {
@@ -143,7 +159,7 @@ func (a *ApiRequest) send(method method, path string, result *apiResponse) (meth
 			SetResult(&result).
 			Get(path)
 		if err == nil {
-			statusCode = methodSuccess(resp.StatusCode())
+			statusCode = MethodSuccess(resp.StatusCode())
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
 			return a.send(method, path, result)
 		} else {
@@ -157,7 +173,7 @@ func (a *ApiRequest) send(method method, path string, result *apiResponse) (meth
 			SetBody(string(dataByte)).
 			Post(path)
 		if err == nil {
-			statusCode = methodSuccess(resp.StatusCode())
+			statusCode = MethodSuccess(resp.StatusCode())
 			if statusCode == 500 {
 				return a.send(method, path, result)
 			}
@@ -174,7 +190,7 @@ func (a *ApiRequest) send(method method, path string, result *apiResponse) (meth
 			SetBody(string(dataByte)).
 			Put(path)
 		if err == nil {
-			statusCode = methodSuccess(resp.StatusCode())
+			statusCode = MethodSuccess(resp.StatusCode())
 			if statusCode == 500 {
 				return a.send(method, path, result)
 			}
@@ -194,7 +210,7 @@ func (c *Config) NewRequest() *ApiRequest {
 }
 
 func (a *ApiRequest) AddLink(rel string, href string) *ApiRequest {
-	a.Links = append(a.Links, links{
+	a.Links = append(a.Links, Links{
 		Rel:  rel,
 		Href: href,
 	})
@@ -202,7 +218,7 @@ func (a *ApiRequest) AddLink(rel string, href string) *ApiRequest {
 }
 
 func (a *ApiRequest) AddData(name string, value any) *ApiRequest {
-	a.Data = append(a.Data, data{
+	a.Data = append(a.Data, Data{
 		Name:  name,
 		Value: value,
 	})
