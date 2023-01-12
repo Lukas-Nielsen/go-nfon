@@ -79,10 +79,10 @@ type Data struct {
 	Value any    `json:"value"`
 }
 
-func DataToMap(data []Data) map[dataName]any {
-	result := make(map[dataName]any)
+func DataToMap(data []Data) map[DataName]any {
+	result := make(map[DataName]any)
 	for _, entry := range data {
-		result[dataName(entry.Name)] = entry.Value
+		result[DataName(entry.Name)] = entry.Value
 	}
 	return result
 }
@@ -92,10 +92,10 @@ type Links struct {
 	Href string `json:"href"`
 }
 
-func LinksToMap(data []Links) map[linkRel]string {
-	result := make(map[linkRel]string)
+func LinksToMap(data []Links) map[LinkRel]string {
+	result := make(map[LinkRel]string)
 	for _, entry := range data {
-		result[linkRel(entry.Rel)] = entry.Href
+		result[LinkRel(entry.Rel)] = entry.Href
 	}
 	return result
 }

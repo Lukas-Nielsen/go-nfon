@@ -1,7 +1,7 @@
 package nfon
 
-type linkRel string
-type dataName string
+type LinkRel string
+type DataName string
 
 // predefind values
 const (
@@ -47,50 +47,50 @@ const (
 
 // possible link rels
 const (
-	BLACKLIST_PROFILE        linkRel = "blacklistProfile"
-	CUSTOMER_CONTRACT        linkRel = "customerContract"
-	INTERNAL_OUTGOING        linkRel = "internalOutgoing"
-	PREFERRED_OUTBOUND_TRUNK linkRel = "preferredOutboundTrunk"
-	EMERGENCY_SITE           linkRel = "emergencySite" // INHERIT
-	CTI_INFO                 linkRel = "ctiInfo"
+	BLACKLIST_PROFILE        LinkRel = "blacklistProfile"
+	CUSTOMER_CONTRACT        LinkRel = "customerContract"
+	INTERNAL_OUTGOING        LinkRel = "internalOutgoing"
+	PREFERRED_OUTBOUND_TRUNK LinkRel = "preferredOutboundTrunk"
+	EMERGENCY_SITE           LinkRel = "emergencySite" // INHERIT
+	CTI_INFO                 LinkRel = "ctiInfo"
 )
 
 // possible data names
 const (
-	EXTENSION_NUMBER                          dataName = "extensionNumber"
-	DISPLAY_NAME                              dataName = "displayName"
-	ACCESS_CENTRAL_PHONE_BOOK                 dataName = "accessCentralPhoneBook"
-	AUTODIAL_TIMEOUT                          dataName = "autodialTimeout"
-	INTERCOM_ENABLED                          dataName = "intercomEnabled"
-	NUMBERGUESSING_LENGTH                     dataName = "numberguessingLength"
-	CALL_WAITING_INDICATION                   dataName = "callWaitingIndication "
-	REPLICATE_AGENT                           dataName = "replicateAgent "
-	CLIR_ENABLED                              dataName = "clirEnabled"
-	NCONTROL_ENABLED                          dataName = "ncontrolEnabled"
-	CCBS                                      dataName = "ccbs "
-	PHONE_BOOK_HIDE                           dataName = "phoneBookHide"
-	TIMEOUT_AFTER_SIP_TRANSFER                dataName = "timeoutAfterSipTransfer "
-	COST_CENTER                               dataName = "costCenter "
-	ABANDON_OTHER_SOFTPHONES                  dataName = "abandonOtherSoftphones"
-	CLICK_TO_DIAL_STATE                       dataName = "clickToDialState"
-	RECORDING_MODE                            dataName = "recordingMode"
-	MEDIA_GATEWAY_EMERGENCY_DIALPLAN_PRIORITY dataName = "mediaGatewayEmergencyDialplanPriority "
-	LANGUAGE                                  dataName = "language "
-	DIAL_PREFIX                               dataName = "dialPrefix "
-	N_MEETING                                 dataName = "nMeeting "
+	EXTENSION_NUMBER                          DataName = "extensionNumber"
+	DISPLAY_NAME                              DataName = "displayName"
+	ACCESS_CENTRAL_PHONE_BOOK                 DataName = "accessCentralPhoneBook"
+	AUTODIAL_TIMEOUT                          DataName = "autodialTimeout"
+	INTERCOM_ENABLED                          DataName = "intercomEnabled"
+	NUMBERGUESSING_LENGTH                     DataName = "numberguessingLength"
+	CALL_WAITING_INDICATION                   DataName = "callWaitingIndication "
+	REPLICATE_AGENT                           DataName = "replicateAgent "
+	CLIR_ENABLED                              DataName = "clirEnabled"
+	NCONTROL_ENABLED                          DataName = "ncontrolEnabled"
+	CCBS                                      DataName = "ccbs "
+	PHONE_BOOK_HIDE                           DataName = "phoneBookHide"
+	TIMEOUT_AFTER_SIP_TRANSFER                DataName = "timeoutAfterSipTransfer "
+	COST_CENTER                               DataName = "costCenter "
+	ABANDON_OTHER_SOFTPHONES                  DataName = "abandonOtherSoftphones"
+	CLICK_TO_DIAL_STATE                       DataName = "clickToDialState"
+	RECORDING_MODE                            DataName = "recordingMode"
+	MEDIA_GATEWAY_EMERGENCY_DIALPLAN_PRIORITY DataName = "mediaGatewayEmergencyDialplanPriority "
+	LANGUAGE                                  DataName = "language "
+	DIAL_PREFIX                               DataName = "dialPrefix "
+	N_MEETING                                 DataName = "nMeeting "
 )
 
 type Option struct {
-	link map[linkRel]string
-	data map[dataName]any
+	link map[LinkRel]string
+	data map[DataName]any
 }
 
-func (o *Option) SetData(name dataName, value any) *Option {
+func (o *Option) SetData(name DataName, value any) *Option {
 	o.data[name] = value
 	return o
 }
 
-func (o *Option) SetLink(rel linkRel, href string) *Option {
+func (o *Option) SetLink(rel LinkRel, href string) *Option {
 	o.link[rel] = href
 	return o
 }
