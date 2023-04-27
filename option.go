@@ -53,6 +53,7 @@ const (
 	PREFERRED_OUTBOUND_TRUNK LinkRel = "preferredOutboundTrunk"
 	EMERGENCY_SITE           LinkRel = "emergencySite" // INHERIT
 	CTI_INFO                 LinkRel = "ctiInfo"
+	TARGET                   LinkRel = "target"
 )
 
 // possible data names
@@ -63,21 +64,24 @@ const (
 	AUTODIAL_TIMEOUT                          DataName = "autodialTimeout"
 	INTERCOM_ENABLED                          DataName = "intercomEnabled"
 	NUMBERGUESSING_LENGTH                     DataName = "numberguessingLength"
-	CALL_WAITING_INDICATION                   DataName = "callWaitingIndication "
-	REPLICATE_AGENT                           DataName = "replicateAgent "
+	CALL_WAITING_INDICATION                   DataName = "callWaitingIndication"
+	REPLICATE_AGENT                           DataName = "replicateAgent"
 	CLIR_ENABLED                              DataName = "clirEnabled"
 	NCONTROL_ENABLED                          DataName = "ncontrolEnabled"
-	CCBS                                      DataName = "ccbs "
+	CCBS                                      DataName = "ccbs"
 	PHONE_BOOK_HIDE                           DataName = "phoneBookHide"
-	TIMEOUT_AFTER_SIP_TRANSFER                DataName = "timeoutAfterSipTransfer "
-	COST_CENTER                               DataName = "costCenter "
+	TIMEOUT_AFTER_SIP_TRANSFER                DataName = "timeoutAfterSipTransfer"
+	COST_CENTER                               DataName = "costCenter"
 	ABANDON_OTHER_SOFTPHONES                  DataName = "abandonOtherSoftphones"
 	CLICK_TO_DIAL_STATE                       DataName = "clickToDialState"
 	RECORDING_MODE                            DataName = "recordingMode"
-	MEDIA_GATEWAY_EMERGENCY_DIALPLAN_PRIORITY DataName = "mediaGatewayEmergencyDialplanPriority "
-	LANGUAGE                                  DataName = "language "
-	DIAL_PREFIX                               DataName = "dialPrefix "
-	N_MEETING                                 DataName = "nMeeting "
+	MEDIA_GATEWAY_EMERGENCY_DIALPLAN_PRIORITY DataName = "mediaGatewayEmergencyDialplanPriority"
+	LANGUAGE                                  DataName = "language"
+	DIAL_PREFIX                               DataName = "dialPrefix"
+	N_MEETING                                 DataName = "nMeeting"
+	KEY_NUMBER                                DataName = "keyNumber"
+	TYPE                                      DataName = "type"
+	FUNCTION_CODE                             DataName = "functionCode"
 )
 
 type Option struct {
