@@ -127,8 +127,7 @@ func (a *ApiRequest) send(method method, path string, result *ApiResponse) (Meth
 	var responseError apiError
 
 	client := resty.New().
-		SetBaseURL(API_URL).
-		SetDebug(true)
+		SetBaseURL(API_URL)
 
 	request := client.R().
 		SetHeader("Authorization", "NFON-API "+a.key+":"+signature).
