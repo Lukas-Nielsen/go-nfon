@@ -211,3 +211,16 @@ func (p *PhoneExtension) DeleteFunctionKeyEntry(id string, key string) bool {
 		return false
 	}
 }
+
+func (p *PhoneExtension) GetCallforwardProfiles(id string, offset int, pagesize int) ApiResponse {
+	query := "?_offset=" + fmt.Sprint(offset) + "&_pagesize=" + fmt.Sprint(pagesize)
+	var data ApiResponse
+
+	if status, err := p.NewRequest().
+		send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/callforward-profiles"+query, &data); status == GET_SUCCESS {
+		return data
+	} else {
+		err.log()
+		return ApiResponse{}
+	}
+}
