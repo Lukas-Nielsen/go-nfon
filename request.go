@@ -100,7 +100,7 @@ func LinksToMap(data []Links) map[LinkRel]string {
 	return result
 }
 
-func (a *ApiRequest) send(method method, path string, result *ApiResponse) (MethodSuccess, apiError) {
+func (a *ApiRequest) Send(method method, path string, result *ApiResponse) (MethodSuccess, apiError) {
 	var dataByte []byte
 	if len(a.Data) == 0 && len(a.Links) == 0 {
 		dataByte = []byte{}
@@ -127,7 +127,7 @@ func (a *ApiRequest) send(method method, path string, result *ApiResponse) (Meth
 	var responseError apiError
 
 	client := resty.New().
-		SetBaseURL(API_URL)
+		SetBaseURL(API_URL).SetDebug(a.debug)
 
 	request := client.R().
 		SetHeader("Authorization", "NFON-API "+a.key+":"+signature).
@@ -147,7 +147,7 @@ func (a *ApiRequest) send(method method, path string, result *ApiResponse) (Meth
 		if err == nil {
 			statusCode = MethodSuccess(resp.StatusCode())
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return a.send(method, path, result)
+			return a.Send(method, path, result)
 		} else {
 			log.Println(err)
 		}
@@ -160,7 +160,7 @@ func (a *ApiRequest) send(method method, path string, result *ApiResponse) (Meth
 		if err == nil {
 			statusCode = MethodSuccess(resp.StatusCode())
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return a.send(method, path, result)
+			return a.Send(method, path, result)
 		} else {
 			log.Println(err)
 		}
@@ -174,10 +174,10 @@ func (a *ApiRequest) send(method method, path string, result *ApiResponse) (Meth
 		if err == nil {
 			statusCode = MethodSuccess(resp.StatusCode())
 			if statusCode == 500 {
-				return a.send(method, path, result)
+				return a.Send(method, path, result)
 			}
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return a.send(method, path, result)
+			return a.Send(method, path, result)
 		} else {
 			log.Println(err)
 		}
@@ -191,10 +191,10 @@ func (a *ApiRequest) send(method method, path string, result *ApiResponse) (Meth
 		if err == nil {
 			statusCode = MethodSuccess(resp.StatusCode())
 			if statusCode == 500 {
-				return a.send(method, path, result)
+				return a.Send(method, path, result)
 			}
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return a.send(method, path, result)
+			return a.Send(method, path, result)
 		} else {
 			log.Println(err)
 		}

@@ -40,7 +40,7 @@ func NewPhoneExtensionFunctionKeyOption(name string, key int, keyType string, op
 
 func (p *PhoneExtension) DeleteEntry(id string) bool {
 	if status, err := p.NewRequest().
-		send(DELETE, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id, nil); status == DELETE_SUCCESS {
+		Send(DELETE, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id, nil); status == DELETE_SUCCESS {
 		return true
 	} else {
 		err.log()
@@ -53,7 +53,7 @@ func (p *PhoneExtension) Get(offset int, pagesize int) ApiResponse {
 	var data ApiResponse
 
 	if status, err := p.NewRequest().
-		send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions"+query, &data); status == GET_SUCCESS {
+		Send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions"+query, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
@@ -65,7 +65,7 @@ func (p *PhoneExtension) GetEntry(id string) ApiResponse {
 	var data ApiResponse
 
 	if status, err := p.NewRequest().
-		send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id, &data); status == GET_SUCCESS {
+		Send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
@@ -91,7 +91,7 @@ func (p *PhoneExtension) Post(input *Option) ApiResponse {
 	}
 
 	if status, err := req.
-		send(POST, "/api/customers/"+p.sysid+"/targets/phone-extensions", &data); status == POST_SUCCESS {
+		Send(POST, "/api/customers/"+p.sysid+"/targets/phone-extensions", &data); status == POST_SUCCESS {
 		return data
 	} else {
 		err.log()
@@ -117,7 +117,7 @@ func (p *PhoneExtension) PutEntry(id string, input *Option) bool {
 	}
 
 	if status, err := req.
-		send(POST, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id, &data); status == PUT_SUCCESS {
+		Send(POST, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id, &data); status == PUT_SUCCESS {
 		return true
 	} else {
 		err.log()
@@ -130,7 +130,7 @@ func (p *PhoneExtension) GetFunctionKey(id string, offset int, pagesize int) Api
 	var data ApiResponse
 
 	if status, err := p.NewRequest().
-		send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys"+query, &data); status == GET_SUCCESS {
+		Send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys"+query, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
@@ -156,7 +156,7 @@ func (p *PhoneExtension) PostFunctionKey(id string, input *Option) ApiResponse {
 	}
 
 	if status, err := req.
-		send(POST, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys", &data); status == POST_SUCCESS {
+		Send(POST, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys", &data); status == POST_SUCCESS {
 		return data
 	} else {
 		err.log()
@@ -168,7 +168,7 @@ func (p *PhoneExtension) GetFunctionKeyEntry(id string, key string) ApiResponse 
 	var data ApiResponse
 
 	if status, err := p.NewRequest().
-		send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys/"+key, &data); status == GET_SUCCESS {
+		Send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys/"+key, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
@@ -194,7 +194,7 @@ func (p *PhoneExtension) PutFunctionKeyEntry(id string, key string, input *Optio
 	}
 
 	if status, err := req.
-		send(PUT, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys/"+key, &data); status == PUT_SUCCESS {
+		Send(PUT, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys/"+key, &data); status == PUT_SUCCESS {
 		return data
 	} else {
 		err.log()
@@ -204,7 +204,7 @@ func (p *PhoneExtension) PutFunctionKeyEntry(id string, key string, input *Optio
 
 func (p *PhoneExtension) DeleteFunctionKeyEntry(id string, key string) bool {
 	if status, err := p.NewRequest().
-		send(DELETE, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys/"+key, nil); status == DELETE_SUCCESS {
+		Send(DELETE, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/function-keys/"+key, nil); status == DELETE_SUCCESS {
 		return true
 	} else {
 		err.log()
@@ -217,7 +217,7 @@ func (p *PhoneExtension) GetCallforwardProfiles(id string, offset int, pagesize 
 	var data ApiResponse
 
 	if status, err := p.NewRequest().
-		send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/callforward-profiles"+query, &data); status == GET_SUCCESS {
+		Send(GET, "/api/customers/"+p.sysid+"/targets/phone-extensions/"+id+"/callforward-profiles"+query, &data); status == GET_SUCCESS {
 		return data
 	} else {
 		err.log()
