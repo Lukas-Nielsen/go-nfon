@@ -1,21 +1,24 @@
 package nfon
 
-const (
-	API_URL = "https://portal-api.nfon.net:8090"
-)
-
-type Config struct {
-	key    string
-	secret string
-	sysid  string
-	debug  bool
+type config struct {
+	key    string // api key
+	secret string // apisecret
+	uri    string // api uri
+	debug  bool   // debug the requests
 }
 
-func NewConfig(sysid string, key string, secret string, debug bool) *Config {
-	return &Config{
-		key:    key,
-		secret: secret,
-		sysid:  sysid,
-		debug:  debug,
+type Client struct {
+	config config
+}
+
+// param api key, api secret, api uri, debug the requests
+func NewClient(key string, secret string, uri string, debug bool) *Client {
+	return &Client{
+		config: config{
+			key:    key,
+			secret: secret,
+			uri:    uri,
+			debug:  debug,
+		},
 	}
 }
