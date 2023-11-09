@@ -130,8 +130,8 @@ func (r *Request) Send(method method, path string, result *Response) (int, Error
 	return statusCode, responseError
 }
 
-func (c Client) NewRequest() Request {
-	return Request{
+func (c Client) NewRequest() *Request {
+	return &Request{
 		client: c,
 	}
 }
