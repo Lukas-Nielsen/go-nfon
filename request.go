@@ -27,6 +27,13 @@ func (e Error) Log() {
 }
 
 func (r *Request) Send(method method, path string, result *Response) (int, Error) {
+	return r.send(method, path, true, result)
+}
+
+func (r *Request) send(method method, path string, first bool, result *Response) (int, Error) {
+	if first {
+		r.client.requestCount += 1
+	}
 	var dataByte []byte
 	if len(r.Data) == 0 && len(r.Links) == 0 {
 		dataByte = []byte{}
@@ -74,7 +81,7 @@ func (r *Request) Send(method method, path string, result *Response) (int, Error
 		if err == nil {
 			statusCode = resp.StatusCode()
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return r.Send(method, path, result)
+			return r.send(method, path, false, result)
 		} else {
 			log.Println(err)
 		}
@@ -87,7 +94,7 @@ func (r *Request) Send(method method, path string, result *Response) (int, Error
 		if err == nil {
 			statusCode = resp.StatusCode()
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return r.Send(method, path, result)
+			return r.send(method, path, false, result)
 		} else {
 			log.Println(err)
 		}
@@ -101,10 +108,10 @@ func (r *Request) Send(method method, path string, result *Response) (int, Error
 		if err == nil {
 			statusCode = resp.StatusCode()
 			if statusCode == 500 {
-				return r.Send(method, path, result)
+				return r.send(method, path, false, result)
 			}
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return r.Send(method, path, result)
+			return r.send(method, path, false, result)
 		} else {
 			log.Println(err)
 		}
@@ -117,10 +124,10 @@ func (r *Request) Send(method method, path string, result *Response) (int, Error
 		if err == nil {
 			statusCode = resp.StatusCode()
 			if statusCode == 500 {
-				return r.Send(method, path, result)
+				return r.send(method, path, false, result)
 			}
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return r.Send(method, path, result)
+			return r.send(method, path, false, result)
 		} else {
 			log.Println(err)
 		}

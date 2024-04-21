@@ -8,7 +8,8 @@ type config struct {
 }
 
 type Client struct {
-	config config
+	config       config
+	requestCount uint
 }
 
 // param api key, api secret, api uri, debug the requests
@@ -20,5 +21,10 @@ func NewClient(key string, secret string, uri string, debug bool) *Client {
 			uri:    uri,
 			debug:  debug,
 		},
+		requestCount: 0,
 	}
+}
+
+func (c *Client) GetRequestCount() uint {
+	return c.requestCount
 }
