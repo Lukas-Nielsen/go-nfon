@@ -33,7 +33,7 @@ type Items struct {
 }
 
 type Request struct {
-	client Client
+	client *Client
 	Links  []links `json:"links,omitempty"`
 	Data   []data  `json:"data,omitempty"`
 }

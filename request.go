@@ -137,7 +137,7 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 	return statusCode, responseError
 }
 
-func (c Client) NewRequest() *Request {
+func (c *Client) NewRequest() *Request {
 	return &Request{
 		client: c,
 	}
