@@ -1,7 +1,7 @@
 module github.com/Lukas-Nielsen/go-nfon
 
-go 1.22
+go 1.23.4
 
-require github.com/go-resty/resty/v2 v2.16.2
+require github.com/go-resty/resty/v2 v2.16.3
 
-require golang.org/x/net v0.27.0 // indirect
+require golang.org/x/net v0.34.0 // indirect
