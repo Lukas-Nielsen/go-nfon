@@ -72,7 +72,7 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 		SetHeader("Content-Length", contentLength).
 		SetHeader("Content-Type", content_type).
 		SetHeader("x-nfon-date", request_date).
-		SetHeader("User-Agent", "go-nfon/"+version).
+		SetHeader("User-Agent", sanitizeUA("go-nfon/"+version)).
 		SetHeader("Accept", "*/*")
 
 	switch method {
@@ -160,4 +160,14 @@ func (r *Request) AddData(name string, value any) *Request {
 		Value: value,
 	})
 	return r
+}
+
+func sanitizeUA(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if r >= 0x20 && r <= 0x7e { // printable ASCII range
+			b.WriteRune(r)
+		}
+	}
+	return b.String()
 }
