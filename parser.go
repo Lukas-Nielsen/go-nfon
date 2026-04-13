@@ -27,7 +27,6 @@ func (r response) parse(c *Response) {
 
 	var t []Items
 	for _, e := range r.Items {
-		e := e
 		t = append(t, Items{
 			Href:  e.Href,
 			Links: linksToMap(e.Links),

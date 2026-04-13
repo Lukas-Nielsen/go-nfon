@@ -4,6 +4,7 @@ import (
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha1"
+	_ "embed"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
@@ -15,12 +16,14 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+//go:embed version
+var version string
+
 func (e Error) Log() {
 	log.Println(e.Title+":", e.Detail)
 	if len(e.Errors) > 0 {
 		log.Println("details")
 		for _, entry := range e.Errors {
-			entry := entry
 			log.Println(entry.Message, "@", entry.Path, "with value", entry.Value)
 		}
 	}
@@ -48,7 +51,7 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 	data_md5_hex := hex.EncodeToString(data_md5[:])
 	content_type := "application/json; charset=utf-8"
 	current_time := time.Now().UTC()
-	request_date := strings.Replace(current_time.Format(time.RFC1123), "UTC", "GMT", -1)
+	request_date := strings.ReplaceAll(current_time.Format(time.RFC1123), "UTC", "GMT")
 	string_to_sign := string(method) + "\n" + data_md5_hex + "\n" + content_type + "\n" + request_date + "\n" + path
 	h := hmac.New(sha1.New, []byte(r.client.config.secret))
 	h.Write([]byte(string_to_sign))
@@ -69,7 +72,7 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 		SetHeader("Content-Length", contentLength).
 		SetHeader("Content-Type", content_type).
 		SetHeader("x-nfon-date", request_date).
-		SetHeader("User-Agent", "github.com/Lukas-Nielsen/go-nfon").
+		SetHeader("User-Agent", "go-nfon/"+version).
 		SetHeader("Accept", "*/*")
 
 	switch method {
