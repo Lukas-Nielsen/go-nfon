@@ -29,11 +29,11 @@ func (e Error) Log() {
 	}
 }
 
-func (r *Request) Send(method method, path string, result *Response) (int, Error) {
-	return r.send(method, path, true, result)
+func (r *Request) Send(customer string, method method, path string, result *Response) (int, Error) {
+	return r.send(customer, method, path, true, result)
 }
 
-func (r *Request) send(method method, path string, first bool, result *Response) (int, Error) {
+func (r *Request) send(customer string, method method, path string, first bool, result *Response) (int, Error) {
 	if first {
 		r.client.requestCount += 1
 	}
@@ -72,7 +72,7 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 		SetHeader("Content-Length", contentLength).
 		SetHeader("Content-Type", content_type).
 		SetHeader("x-nfon-date", request_date).
-		SetHeader("User-Agent", sanitizeUA("go-nfon/"+version)).
+		SetHeader("User-Agent", sanitizeUA(fmt.Sprintf("go-nfon/%s (%s)", version, customer))).
 		SetHeader("Accept", "*/*")
 
 	switch method {
@@ -84,7 +84,7 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 		if err == nil {
 			statusCode = resp.StatusCode()
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return r.send(method, path, false, result)
+			return r.send(customer, method, path, false, result)
 		} else {
 			log.Println(err)
 		}
@@ -97,7 +97,7 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 		if err == nil {
 			statusCode = resp.StatusCode()
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return r.send(method, path, false, result)
+			return r.send(customer, method, path, false, result)
 		} else {
 			log.Println(err)
 		}
@@ -111,10 +111,10 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 		if err == nil {
 			statusCode = resp.StatusCode()
 			if statusCode == 500 {
-				return r.send(method, path, false, result)
+				return r.send(customer, method, path, false, result)
 			}
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return r.send(method, path, false, result)
+			return r.send(customer, method, path, false, result)
 		} else {
 			log.Println(err)
 		}
@@ -127,10 +127,10 @@ func (r *Request) send(method method, path string, first bool, result *Response)
 		if err == nil {
 			statusCode = resp.StatusCode()
 			if statusCode == 500 {
-				return r.send(method, path, false, result)
+				return r.send(customer, method, path, false, result)
 			}
 		} else if strings.Contains(err.Error(), "TLS handshake timeout") {
-			return r.send(method, path, false, result)
+			return r.send(customer, method, path, false, result)
 		} else {
 			log.Println(err)
 		}
